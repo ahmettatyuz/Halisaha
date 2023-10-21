@@ -114,7 +114,7 @@ namespace Halisaha.API.Controllers
             var result = await _playerService.GetPlayerById(id);
             if (result != null)
             {
-                result.Password= BCrypt.EnhancedHashPassword(password);
+                result.Password= BCrypt.EnhancedHashPassword(password) ;
                 return Ok(await _playerService.UpdatePlayer(result));
             }
             else

@@ -13,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddSingleton<IPlayerRepository, PlayerRepository>();
 builder.Services.AddSingleton<IPlayerService, PlayerManager>();
+builder.Services.AddSingleton<IOwnerService, OwnerManager>();
 builder.Services.Configure<JwtAyarlari>(builder.Configuration.GetSection("Token"));
 
 // burası useAuthentication() fonksiyonu içinayarlamaları yapıyor

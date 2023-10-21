@@ -1,0 +1,28 @@
+﻿<Properties StartupConfiguration="{63D92349-2601-4952-A536-4A4EB2F3CDC1}|https">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Halisaha.API PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Halisaha.API/Controllers/PlayerController.cs">
+    <Files>
+      <File FileName="Halisaha.API/Controllers/PlayerController.cs" Line="18" Column="6" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Halisaha" expanded="True">
+            <Node name="Halisaha.API" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="PlayerController.cs" selected="True" />
+              </Node>
+              <Node name="Properties" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MultiItemStartupConfigurations />
+</Properties>

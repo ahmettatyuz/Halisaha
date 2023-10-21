@@ -1,0 +1,17 @@
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.DataAccess/bin/Debug/net7.0/Halisaha.DataAccess.deps.json
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.DataAccess/bin/Debug/net7.0/Halisaha.DataAccess.runtimeconfig.json
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.DataAccess/bin/Debug/net7.0/Halisaha.DataAccess.dll
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.DataAccess/bin/Debug/net7.0/Halisaha.DataAccess.pdb
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.DataAccess/bin/Debug/net7.0/Halisaha.Entities.dll
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.DataAccess/bin/Debug/net7.0/Halisaha.Entities.pdb
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.DataAccess/obj/Debug/net7.0/Halisaha.DataAccess.csproj.AssemblyReference.cache
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.DataAccess/obj/Debug/net7.0/Halisaha.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.DataAccess/obj/Debug/net7.0/Halisaha.DataAccess.AssemblyInfoInputs.cache
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.DataAccess/obj/Debug/net7.0/Halisaha.DataAccess.AssemblyInfo.cs
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.DataAccess/obj/Debug/net7.0/Halisaha.DataAccess.csproj.CoreCompileInputs.cache
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.DataAccess/obj/Debug/net7.0/Halisaha.DataAccess.csproj.CopyComplete
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.DataAccess/obj/Debug/net7.0/Halisaha.DataAccess.dll
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.DataAccess/obj/Debug/net7.0/refint/Halisaha.DataAccess.dll
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.DataAccess/obj/Debug/net7.0/Halisaha.DataAccess.pdb
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.DataAccess/obj/Debug/net7.0/Halisaha.DataAccess.genruntimeconfig.cache
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.DataAccess/obj/Debug/net7.0/ref/Halisaha.DataAccess.dll

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/Halisaha.API.props" />
+</Project>

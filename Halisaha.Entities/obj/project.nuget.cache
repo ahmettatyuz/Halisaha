@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "696iR1Jki47rM2gGpNlJfLKxMh6u5LbiEw4fYyNIssSXXQWvZ8UkGq7bCLkNvFYoArJJb9WhDCil417qJxgTXA==",
+  "success": true,
+  "projectFilePath": "/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Entities/Halisaha.Entities.csproj",
+  "expectedPackageFiles": [
+    "/Users/ahmettatyuz/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
+    "/Users/ahmettatyuz/.nuget/packages/swashbuckle.aspnetcore.annotations/6.5.0/swashbuckle.aspnetcore.annotations.6.5.0.nupkg.sha512",
+    "/Users/ahmettatyuz/.nuget/packages/swashbuckle.aspnetcore.swagger/6.5.0/swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "/Users/ahmettatyuz/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.5.0/swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,6 +1,7 @@
 ﻿using System;
 using Halisaha.DataAccess.Abstract;
 using Halisaha.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Halisaha.DataAccess.Concrete
 {
@@ -24,6 +25,14 @@ namespace Halisaha.DataAccess.Concrete
                 halisahaDbContext.Owners.Remove(deletedOwner);
                 await halisahaDbContext.SaveChangesAsync();
                 return deletedOwner;
+            }
+        }
+
+        public async Task<List<Owner>> GetAllOwners()
+        {
+            using (var halisahaDbContext = new HalisahaDbContext())
+            {
+                return await halisahaDbContext.Owners.ToListAsync();
             }
         }
 

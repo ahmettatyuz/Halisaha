@@ -15,6 +15,7 @@ namespace Halisaha.DataAccess.Abstract
 
         Task<Owner> UpdateOwner(Owner owner);
 
+        Task<List<Owner>> GetAllOwners();
     }
 }
 

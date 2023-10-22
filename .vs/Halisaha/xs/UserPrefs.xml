@@ -1,19 +1,20 @@
-﻿<Properties StartupConfiguration="{63D92349-2601-4952-A536-4A4EB2F3CDC1}|https">
+﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{63D92349-2601-4952-A536-4A4EB2F3CDC1}|https">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.Halisaha.API PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Halisaha.API/Controllers/PlayerController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Halisaha.API/Controllers/OwnerContoller.cs">
     <Files>
-      <File FileName="Halisaha.API/Controllers/PlayerController.cs" Line="136" Column="55" />
-      <File FileName="Halisaha.Business/Concrete/PlayerManager.cs" Line="40" Column="55" />
+      <File FileName="Halisaha.API/Controllers/OwnerContoller.cs" Line="24" Column="42" />
+      <File FileName="Halisaha.API/Controllers/PlayerController.cs" Line="48" Column="21" />
+      <File FileName="Halisaha.API/Program.cs" Line="7" Column="27" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Halisaha" expanded="True">
+          <Node name="Halisaha">
             <Node name="Halisaha.API" expanded="True">
               <Node name="Controllers" expanded="True" />
               <Node name="Properties" expanded="True" />

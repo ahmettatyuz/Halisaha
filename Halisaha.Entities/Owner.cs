@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Halisaha.Entities
 {
@@ -56,6 +57,7 @@ namespace Halisaha.Entities
 
         public DateTime CreateDate { get; set; } = DateTime.Now;
 
+        [SwaggerSchema(ReadOnly = true)]
         public List<Session>? Sessions { get; set; }
     }
 }

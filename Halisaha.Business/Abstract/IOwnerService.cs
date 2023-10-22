@@ -14,6 +14,8 @@ namespace Halisaha.Business.Abstract
         Task<Owner> CreateOwner(Owner owner);
 
         Task<Owner> UpdateOwner(Owner owner);
+
+        Task<List<Owner>> GetAllOwners();
     }
 }
 

@@ -15,12 +15,18 @@ namespace Halisaha.Business.Concrete
         }
         public async Task<Owner> CreateOwner(Owner owner)
         {
+            owner.Password = BCrypt.Net.BCrypt.EnhancedHashPassword(owner.Password);
             return await _ownerRepository.CreateOwner(owner);
         }
 
         public async Task<Owner> DeleteOwner(int id)
         {
             return await _ownerRepository.DeleteOwner(id);
+        }
+
+        public async Task<List<Owner>> GetAllOwners()
+        {
+            return await _ownerRepository.GetAllOwners();
         }
 
         public async Task<Owner> GetOwnerById(int id)

@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Halisaha.Entities
 {
@@ -11,6 +13,8 @@ namespace Halisaha.Entities
         public int Id { get; set; }
 
         public int OwnerId { get; set; }
+
+        [JsonIgnore]
         public Owner? Owner { get; set; } // navigation property
 
         [StringLength(50)]

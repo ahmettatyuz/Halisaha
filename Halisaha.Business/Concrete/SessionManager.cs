@@ -23,6 +23,11 @@ namespace Halisaha.Business.Concrete
             return await _sessionRepository.DeleteSession(id);
         }
 
+        public async Task<Session> GetSessionById(int id)
+        {
+            return await _sessionRepository.GetSessionById(id);
+        }
+
         public async Task<List<Session>> GetSessionsByOwnerId(int ownerId)
         {
             return await _sessionRepository.GetSessionsByOwnerId(ownerId);

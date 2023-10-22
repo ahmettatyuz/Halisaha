@@ -12,6 +12,8 @@ namespace Halisaha.Business.Abstract
         Task<Session> DeleteSession(int id);
 
         Task<Session> UpdateSession(Session session);
+
+        Task<Session> GetSessionById(int id);
     }
 }
 

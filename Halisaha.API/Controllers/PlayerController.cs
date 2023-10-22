@@ -22,7 +22,7 @@ namespace Halisaha.API.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class PlayerController : Controller
     {
         private IPlayerService _playerService;

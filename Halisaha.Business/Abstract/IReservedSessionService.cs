@@ -5,6 +5,8 @@ namespace Halisaha.Business.Abstract
 {
     public interface IReservedSessionService
     {
+        Task<ReservedSession> GetReservedSessionById(int id);
+
         Task<List<ReservedSession>> GetReservedSessionsByOwnerId(int id);
 
         Task<List<ReservedSession>> GetReservedSessionsByPlayerId(int id);

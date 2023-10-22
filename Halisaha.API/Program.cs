@@ -15,6 +15,10 @@ builder.Services.AddSingleton<IPlayerRepository, PlayerRepository>();
 builder.Services.AddSingleton<IPlayerService, PlayerManager>();
 builder.Services.AddSingleton<IOwnerService, OwnerManager>();
 builder.Services.AddSingleton<IOwnerRepository, OwnerRepository>();
+builder.Services.AddSingleton<ISessionRepository, SessionRepository>();
+builder.Services.AddSingleton<ISessionService, SessionManager>();
+builder.Services.AddSingleton<IReservedSessionRepository, ReservedSessionRepository>();
+builder.Services.AddSingleton<IReservedSessionService, ReservedSessionManager>();
 builder.Services.Configure<JwtAyarlari>(builder.Configuration.GetSection("Token"));
 
 // burası useAuthentication() fonksiyonu içinayarlamaları yapıyor

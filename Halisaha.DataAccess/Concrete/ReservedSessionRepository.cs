@@ -22,9 +22,17 @@ namespace Halisaha.DataAccess.Concrete
             using (var halisahaDbContext = new HalisahaDbContext())
             {
                 var deletedReservedSession = await halisahaDbContext.ReservedSessions.FindAsync(id);
-                halisahaDbContext.ReservedSessions.Remove(deletedReservedSession);
+                halisahaDbContext.ReservedSessions.Remove(deletedReservedSession!);
                 await halisahaDbContext.SaveChangesAsync();
-                return deletedReservedSession;
+                return deletedReservedSession!;
+            }
+        }
+
+        public async Task<ReservedSession> GetReservedSessionById(int id)
+        {
+            using (var halisahaDbContext = new HalisahaDbContext())
+            {
+                return await halisahaDbContext.ReservedSessions.FindAsync(id!);
             }
         }
 
@@ -32,8 +40,7 @@ namespace Halisaha.DataAccess.Concrete
         {
             using (var halisahaDbContext = new HalisahaDbContext())
             {
-                return await halisahaDbContext.ReservedSessions.Where(x => x.Session.Owner.Id == id).ToListAsync();
-                
+                return await halisahaDbContext.ReservedSessions.Where(x => x.Session!.Owner!.Id == id).ToListAsync();
             }
         }
 
@@ -41,7 +48,7 @@ namespace Halisaha.DataAccess.Concrete
         {
             using (var halisahaDbContext = new HalisahaDbContext())
             {
-                return await halisahaDbContext.ReservedSessions.Where(x => x.Session.Owner.Id == id).ToListAsync();
+                return await halisahaDbContext.ReservedSessions.Where(x => x.PlayerId! == id).ToListAsync();
             }
         }
 

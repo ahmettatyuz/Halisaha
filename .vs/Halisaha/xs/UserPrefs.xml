@@ -1,15 +1,12 @@
-﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{63D92349-2601-4952-A536-4A4EB2F3CDC1}|https">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+﻿<Properties StartupConfiguration="{63D92349-2601-4952-A536-4A4EB2F3CDC1}|https" GitUserInfo="UsingMD">
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.ItemProperties.Halisaha.API PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Halisaha.API/Controllers/OwnerContoller.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Halisaha.API/Controllers/PlayerController.cs">
     <Files>
-      <File FileName="Halisaha.API/Controllers/OwnerContoller.cs" Line="24" Column="42" />
-      <File FileName="Halisaha.API/Controllers/PlayerController.cs" Line="48" Column="21" />
-      <File FileName="Halisaha.API/Program.cs" Line="7" Column="27" />
+      <File FileName="Halisaha.API/Controllers/OwnerController.cs" Line="120" Column="14" />
+      <File FileName="Halisaha.API/Program.cs" Line="69" Column="1" />
+      <File FileName="Halisaha.API/Controllers/PlayerController.cs" Line="135" Column="14" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -19,18 +16,18 @@
               <Node name="Controllers" expanded="True" />
               <Node name="Properties" expanded="True" />
             </Node>
-            <Node name="Halisaha.Business" expanded="True">
-              <Node name="Abstract" expanded="True" />
-              <Node name="Concrete" expanded="True" />
-            </Node>
             <Node name="Halisaha.DataAccess" expanded="True">
               <Node name="Abstract" expanded="True" />
               <Node name="Concrete" expanded="True" />
             </Node>
+            <Node name="Halisaha.Entities" expanded="True" />
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>

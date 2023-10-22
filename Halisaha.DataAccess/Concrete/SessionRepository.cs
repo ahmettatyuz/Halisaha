@@ -28,6 +28,14 @@ namespace Halisaha.DataAccess.Concrete
             }
         }
 
+        public async Task<Session> GetSessionById(int id)
+        {
+            using (var halisahaDbContext = new HalisahaDbContext())
+            {
+                return await halisahaDbContext.Sessions.FindAsync(id!);
+            }
+        }
+
         public async Task<List<Session>> GetSessionsByOwnerId(int ownerId)
         {
             using (var halisahaDbContext = new HalisahaDbContext())

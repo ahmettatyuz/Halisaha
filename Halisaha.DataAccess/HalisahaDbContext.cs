@@ -14,7 +14,8 @@ public class HalisahaDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);
-        optionsBuilder.UseSqlServer("Server=localhost,1433;Database=HalisahaDB;User ID=sa;Password=Tatyuz51+;Encrypt=true;TrustServerCertificate=true;");
+        //optionsBuilder.UseSqlServer("Server=localhost,1433;Database=HalisahaDB;User ID=sa;Password=Tatyuz51+;Encrypt=true;TrustServerCertificate=true;");
+        optionsBuilder.UseSqlServer("Server=tcp:ahmettatyuz.database.windows.net,1433;Initial Catalog=ahmettatyuz;Persist Security Info=False;User ID=ahmettatyuz;Password=Tatyuz51+;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

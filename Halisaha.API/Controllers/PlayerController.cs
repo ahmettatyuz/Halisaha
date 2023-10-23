@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Halisaha.Business.Abstract;
+﻿using Halisaha.Business.Abstract;
 using Halisaha.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,17 +8,12 @@ using Microsoft.Extensions.Options;
 using System.Text;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Halisaha.API.Controllers
 {
-
     using BCrypt.Net;
-
-
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class PlayerController : Controller
     {
         private IPlayerService _playerService;
@@ -32,7 +23,7 @@ namespace Halisaha.API.Controllers
             _playerService = playerService;
             _jwtAyarlari = jwtAyarlari.Value;
         }
-        // GET: api/values
+
         [HttpPost("register")]
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] Player player)

@@ -1,33 +1,35 @@
 ﻿<Properties StartupConfiguration="{63D92349-2601-4952-A536-4A4EB2F3CDC1}|https" GitUserInfo="UsingMD">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.ItemProperties.Halisaha.API PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Halisaha.API/Controllers/PlayerController.cs">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Halisaha.DataAccess/Abstract/IReservedSessionRepository.cs">
     <Files>
-      <File FileName="Halisaha.API/Controllers/OwnerController.cs" Line="120" Column="14" />
-      <File FileName="Halisaha.API/Program.cs" Line="69" Column="1" />
-      <File FileName="Halisaha.API/Controllers/PlayerController.cs" Line="135" Column="14" />
+      <File FileName="Halisaha.DataAccess/Concrete/ReservedSessionRepository.cs" />
+      <File FileName="Halisaha.DataAccess/Abstract/IReservedSessionRepository.cs" Line="7" Column="3" />
+      <File FileName="Halisaha.Business/Concrete/ReservedSessionManager.cs" />
+      <File FileName="Halisaha.Business/Abstract/IReservedSessionService.cs" />
+      <File FileName="Halisaha.API/Controllers/ReservedSessionController.cs" />
+      <File FileName="Halisaha.Entities/ReservedSession.cs" />
+      <File FileName="Halisaha.API/Program.cs" />
+      <File FileName="Halisaha.API/Controllers/PlayerController.cs" />
+      <File FileName="Halisaha.DataAccess/HalisahaDbContext.cs" Line="14" Column="82" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Halisaha">
+          <Node name="Halisaha" expanded="True">
             <Node name="Halisaha.API" expanded="True">
               <Node name="Controllers" expanded="True" />
+              <Node name="Models" expanded="True" />
               <Node name="Properties" expanded="True" />
             </Node>
-            <Node name="Halisaha.DataAccess" expanded="True">
-              <Node name="Abstract" expanded="True" />
-              <Node name="Concrete" expanded="True" />
-            </Node>
-            <Node name="Halisaha.Entities" expanded="True" />
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations />
 </Properties>

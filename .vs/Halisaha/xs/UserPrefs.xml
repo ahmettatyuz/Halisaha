@@ -1,22 +1,7 @@
-﻿<Properties StartupConfiguration="{63D92349-2601-4952-A536-4A4EB2F3CDC1}|https" GitUserInfo="UsingMD">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{63D92349-2601-4952-A536-4A4EB2F3CDC1}|https">
   <MonoDevelop.Ide.ItemProperties.Halisaha.API PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Halisaha.DataAccess/Abstract/IReservedSessionRepository.cs">
-    <Files>
-      <File FileName="Halisaha.DataAccess/Concrete/ReservedSessionRepository.cs" />
-      <File FileName="Halisaha.DataAccess/Abstract/IReservedSessionRepository.cs" Line="7" Column="3" />
-      <File FileName="Halisaha.Business/Concrete/ReservedSessionManager.cs" />
-      <File FileName="Halisaha.Business/Abstract/IReservedSessionService.cs" />
-      <File FileName="Halisaha.API/Controllers/ReservedSessionController.cs" />
-      <File FileName="Halisaha.Entities/ReservedSession.cs" />
-      <File FileName="Halisaha.API/Program.cs" />
-      <File FileName="Halisaha.API/Controllers/PlayerController.cs" />
-      <File FileName="Halisaha.DataAccess/HalisahaDbContext.cs" Line="14" Column="82" />
-    </Files>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
@@ -26,10 +11,18 @@
               <Node name="Models" expanded="True" />
               <Node name="Properties" expanded="True" />
             </Node>
+            <Node name="Halisaha.DataAccess" expanded="True">
+              <Node name="Abstract" expanded="True" />
+              <Node name="Concrete" expanded="True" />
+            </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>

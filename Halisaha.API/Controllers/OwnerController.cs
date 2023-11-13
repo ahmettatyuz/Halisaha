@@ -5,10 +5,12 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Halisaha.API.Models;
 using Halisaha.API.Security;
 using Halisaha.Business.Abstract;
 using Halisaha.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -19,7 +21,8 @@ namespace Halisaha.API.Controllers
 {
     [Route("api/[controller]")]
     [Authorize]
-    [ApiController]
+    //[ApiController]
+    [EnableCors("_myAllowSpecificOrigins")]
     public class OwnerController : Controller
     {
         private IOwnerService _ownerService;
@@ -29,6 +32,26 @@ namespace Halisaha.API.Controllers
             _ownerService = ownerService;
             _jwtAyarlari = jwtAyarlari.Value;
         }
+
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public string CreateToken(Owner owner)
+        {
+            if (_jwtAyarlari.SecretKey == null) throw new Exception("Secret Key can not be null");
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtAyarlari.SecretKey));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var claims = new[]
+            {
+                new Claim("ID",owner.Id.ToString()),
+                new Claim("Firstname",owner.OwnerFirstName!),
+                new Claim("Lastname",owner.OwnerLastName!),
+            };
+
+            var token = new JwtSecurityToken(_jwtAyarlari.Issuer, _jwtAyarlari.Audience, claims, expires: DateTime.Now.AddHours(1), signingCredentials: credentials);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
 
         [HttpPost("register")]
         [AllowAnonymous]
@@ -52,37 +75,24 @@ namespace Halisaha.API.Controllers
             }
         }
 
-
-        [ApiExplorerSettings(IgnoreApi = true)]
-        public string CreateToken(Owner owner)
-        {
-            if (_jwtAyarlari.SecretKey == null) throw new Exception("Secret Key can not be null");
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtAyarlari.SecretKey));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            var claims = new[]
-            {
-                new Claim("ID",owner.Id.ToString()),
-                new Claim("Firstname",owner.OwnerFirstName!),
-                new Claim("Lastname",owner.OwnerLastName!),
-            };
-
-            var token = new JwtSecurityToken(_jwtAyarlari.Issuer, _jwtAyarlari.Audience, claims, expires: DateTime.Now.AddHours(1), signingCredentials: credentials);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(string phone, string password)
+        public async Task<IActionResult> Login([FromBody] LoginModel user)
         {
-            var result = await _ownerService.GetOwnerByPhone(phone!);
-            if (result == null) return NotFound("Kullanıcı bulunamadı.");
-            if (BCrypt.Net.BCrypt.EnhancedVerify(password, result.Password))
+            if (ModelState.IsValid)
             {
-                return Ok(CreateToken(result));
+                var result = await _ownerService.GetOwnerByPhone(user.Phone);
+                if (result == null) return Ok("Kullanıcı bulunamadı.");
+                if (BCrypt.Net.BCrypt.EnhancedVerify(user.Password, result.Password))
+                {
+                    return Ok(CreateToken(result));
+                }
+                return Ok("Telefon numarası veya parola hatalı.");
             }
-            return BadRequest("Telefon numarası veya parola hatalı.");
+            else
+            {
+                return Ok("Tüm zorunlu alanlar doldurulmalıdır.");
+            }
         }
 
 

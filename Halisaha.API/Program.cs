@@ -5,6 +5,7 @@ using Halisaha.Business.Concrete;
 using Halisaha.DataAccess.Abstract;
 using Halisaha.DataAccess.Concrete;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -38,9 +39,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         };
     }
 );
-
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      builder =>
+                      {
+                          builder.AllowAnyOrigin()
+                                 .AllowAnyMethod()
+                                 .AllowAnyHeader();
+                      });
+});
 
 // rotaların en başına [Authorize] yazınca buradaki değerler ile request'in headerinden gelen token kontrol ediliyor ve ona göre rota çalışmış mı oluyor ?
+
 
 
 builder.Services.AddSwaggerGen(swagger =>
@@ -71,6 +83,7 @@ builder.Services.AddSwaggerGen(swagger =>
 });
 var app = builder.Build();
 
+app.UseCors(MyAllowSpecificOrigins);
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -80,8 +93,8 @@ if (app.Environment.IsDevelopment())
 // useAuthentication() komutu rotaların başında eğer [Authorize] varsa app.AddAuthentication() 'da tanımladığımız kurallara göre kontrol yapılmasını sağlıyor.
 app.UseAuthentication();
 
+
 app.UseAuthorization();
 app.MapControllers();
-
 app.Run();
 

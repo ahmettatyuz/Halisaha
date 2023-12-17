@@ -32,7 +32,7 @@ namespace Halisaha.DataAccess.Concrete
         {
             using (var halisahaDbContext = new HalisahaDbContext())
             {
-                return await halisahaDbContext.Owners.ToListAsync();
+                return await halisahaDbContext.Owners.Include(x=>x.Sessions).ToListAsync();
             }
         }
 
@@ -48,7 +48,7 @@ namespace Halisaha.DataAccess.Concrete
         {
             using (var halisahaDbContext = new HalisahaDbContext())
             {
-                return halisahaDbContext.Owners.FirstOrDefault(x => x.Phone == phone);
+                return halisahaDbContext.Owners.Include(x=>x.Sessions).FirstOrDefault(x => x.Phone == phone);
             }
         }
 

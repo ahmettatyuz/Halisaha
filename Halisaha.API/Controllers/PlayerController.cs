@@ -11,6 +11,8 @@ using System.IdentityModel.Tokens.Jwt;
 namespace Halisaha.API.Controllers
 {
     using BCrypt.Net;
+    using Halisaha.API.Models;
+
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -33,6 +35,7 @@ namespace Halisaha.API.Controllers
                 var result = await _playerService.GetPlayerByPhone(player.Phone!);
                 if (result == null)
                 {
+                    player.CreateDate = DateTime.Now;
                     await _playerService.CreatePlayer(player);
                     return Ok(player);
                 }
@@ -49,11 +52,11 @@ namespace Halisaha.API.Controllers
 
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(string phone, string password)
+        public async Task<IActionResult> Login([FromBody] LoginModel user)
         {
-            var result = await _playerService.GetPlayerByPhone(phone!);
+            var result = await _playerService.GetPlayerByPhone(user.Phone);
             if (result == null) return NotFound("Kullanıcı bulunamadı");
-            if (BCrypt.EnhancedVerify(password, result.Password))
+            if (BCrypt.EnhancedVerify(user.Password, result.Password))
             {
                 return Ok(CreateToken(result));
             }
@@ -71,6 +74,7 @@ namespace Halisaha.API.Controllers
                 new Claim("ID",player.Id.ToString()),
                 new Claim("Firstname",player.FirstName!),
                 new Claim("Lastname",player.Lastname!),
+                new Claim("Role","player"),
             };
 
             var token = new JwtSecurityToken(_jwtAyarlari.Issuer, _jwtAyarlari.Audience, claims, expires: DateTime.Now.AddHours(1), signingCredentials: credentials);
@@ -82,6 +86,12 @@ namespace Halisaha.API.Controllers
         public async Task<IActionResult> GetAllPlayers()
         {
             return Ok(await _playerService.GetPlayers());
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPlayerById(int id)
+        {
+            return Ok(await _playerService.GetPlayerById(id));
         }
 
         [HttpPut]
@@ -100,12 +110,13 @@ namespace Halisaha.API.Controllers
         }
 
         [HttpPut("password")]
-        public async Task<IActionResult> PlayerResetPassword(int id,string password)
+        public async Task<IActionResult> PlayerResetPassword([FromBody] ChangePasswordModel model)
         {
-            var result = await _playerService.GetPlayerById(id);
+            var result = await _playerService.GetPlayerById(model.id);
+            bool verify = BCrypt.EnhancedVerify(model.oldPassword, result.Password);
             if (result != null)
             {
-                result.Password= BCrypt.EnhancedHashPassword(password) ;
+                result.Password= BCrypt.EnhancedHashPassword(model.password) ;
                 return Ok(await _playerService.UpdatePlayer(result));
             }
             else

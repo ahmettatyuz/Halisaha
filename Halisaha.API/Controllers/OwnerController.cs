@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using Halisaha.API.Models;
 using Halisaha.API.Security;
 using Halisaha.Business.Abstract;
@@ -45,6 +41,8 @@ namespace Halisaha.API.Controllers
                 new Claim("ID",owner.Id.ToString()),
                 new Claim("Firstname",owner.OwnerFirstName!),
                 new Claim("Lastname",owner.OwnerLastName!),
+                new Claim("Role","owner"),
+
             };
 
             var token = new JwtSecurityToken(_jwtAyarlari.Issuer, _jwtAyarlari.Audience, claims, expires: DateTime.Now.AddHours(1), signingCredentials: credentials);
@@ -62,6 +60,7 @@ namespace Halisaha.API.Controllers
                 var result = await _ownerService.GetOwnerByPhone(owner.Phone!);
                 if (result == null)
                 {
+                    owner.CreateDate = DateTime.Now;
                     return Ok(await _ownerService.CreateOwner(owner));
                 }
                 else
@@ -110,6 +109,7 @@ namespace Halisaha.API.Controllers
             if (result != null)
             {
                 owner.Password = result.Password;
+                owner.CreateDate = result.CreateDate;
                 return Ok(await _ownerService.UpdateOwner(owner));
             }
             else
@@ -120,13 +120,21 @@ namespace Halisaha.API.Controllers
 
 
         [HttpPut("password")]
-        public async Task<IActionResult> UpdatePassword(int id, string password)
+        public async Task<IActionResult> UpdatePassword([FromBody] ChangePasswordModel model)
         {
-            var result = await _ownerService.GetOwnerById(id);
+            var result = await _ownerService.GetOwnerById(model.id);
+            bool verify = BCrypt.Net.BCrypt.EnhancedVerify(model.oldPassword, result.Password);
             if (result != null)
             {
-                result.Password = BCrypt.Net.BCrypt.EnhancedHashPassword(password);
-                return Ok(await _ownerService.UpdateOwner(result));
+                if (verify)
+                {
+                    result.Password = BCrypt.Net.BCrypt.EnhancedHashPassword(model.password);
+                    return Ok(await _ownerService.UpdateOwner(result));
+                }
+                else
+                {
+                    return BadRequest("Mevcut Parola Yanlış");
+                }
             }
             else
             {
@@ -147,6 +155,18 @@ namespace Halisaha.API.Controllers
             {
                 return NotFound("İşyeri bulunamadı.");
             }
+        }
+
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetOwnerById(int id)
+        {
+            var result = await _ownerService.GetOwnerById(id);
+            if (result == null)
+            {
+                return NotFound("Kullanıcı bulunamadı");
+            }
+            return Ok(result);
         }
 
     }

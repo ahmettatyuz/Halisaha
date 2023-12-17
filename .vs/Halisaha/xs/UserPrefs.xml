@@ -1,29 +1,30 @@
-﻿<Properties StartupConfiguration="{63D92349-2601-4952-A536-4A4EB2F3CDC1}|https" GitUserInfo="UsingMD">
-  <MonoDevelop.Ide.ItemProperties.Halisaha.API PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MultiItemStartupConfigurations />
+﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{63D92349-2601-4952-A536-4A4EB2F3CDC1}|https">
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Halisaha.API PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Halisaha.API/Controllers/OwnerController.cs">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Halisaha.Business/Concrete/ReservedSessionManager.cs">
     <Files>
-      <File FileName="Halisaha.API/Program.cs" />
-      <File FileName="Halisaha.API/Controllers/OwnerController.cs" Line="83" Column="14" />
-      <File FileName="Halisaha.API/Properties/launchSettings.json" />
-      <File FileName="Halisaha.API/appsettings.json" />
-      <File FileName="Halisaha.API/Models/LoginModel.cs" Line="1" Column="1" />
+      <File FileName="Halisaha.API/Program.cs" Line="74" Column="2" />
+      <File FileName="Halisaha.Entities/Session.cs" />
+      <File FileName="Halisaha.Entities/Player.cs" />
+      <File FileName="Halisaha.Entities/ReservedSession.cs" Line="25" Column="11" />
+      <File FileName="Halisaha.API/Controllers/ReservedSessionController.cs" Line="1" Column="1" />
+      <File FileName="Halisaha.Business/Concrete/ReservedSessionManager.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Halisaha" expanded="True">
-            <Node name="Halisaha.API">
-              <Node name="Controllers" expanded="True">
-                <Node name="OwnerController.cs" selected="True" />
-              </Node>
-              <Node name="Models" expanded="True" />
+            <Node name="Halisaha.API" expanded="True">
+              <Node name="Controllers" expanded="True" />
             </Node>
             <Node name="Halisaha.Business" expanded="True">
+              <Node name="Abstract" expanded="True" />
               <Node name="Concrete" expanded="True" />
             </Node>
+            <Node name="Halisaha.DataAccess" selected="True" />
+            <Node name="Halisaha.Entities" expanded="True" />
           </Node>
         </State>
       </Pad>

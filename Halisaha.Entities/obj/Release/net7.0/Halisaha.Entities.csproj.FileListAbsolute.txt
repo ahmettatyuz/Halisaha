@@ -1,0 +1,12 @@
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Entities/bin/Release/net7.0/Halisaha.Entities.deps.json
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Entities/bin/Release/net7.0/Halisaha.Entities.dll
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Entities/bin/Release/net7.0/Halisaha.Entities.pdb
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Entities/obj/Release/net7.0/Halisaha.Entities.csproj.AssemblyReference.cache
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Entities/obj/Release/net7.0/Halisaha.Entities.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Entities/obj/Release/net7.0/Halisaha.Entities.AssemblyInfoInputs.cache
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Entities/obj/Release/net7.0/Halisaha.Entities.AssemblyInfo.cs
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Entities/obj/Release/net7.0/Halisaha.Entities.csproj.CoreCompileInputs.cache
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Entities/obj/Release/net7.0/Halisaha.Entities.dll
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Entities/obj/Release/net7.0/refint/Halisaha.Entities.dll
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Entities/obj/Release/net7.0/Halisaha.Entities.pdb
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Entities/obj/Release/net7.0/ref/Halisaha.Entities.dll

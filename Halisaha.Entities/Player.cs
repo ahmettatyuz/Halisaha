@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Halisaha.Entities;
@@ -43,6 +44,7 @@ public class Player
     public DateTime CreateDate { get; set; } = DateTime.Now;
 
     [SwaggerSchema(ReadOnly = true)]
+    [JsonIgnore]
     public List<ReservedSession>? ReservedSessions { get; set; }
 
 }

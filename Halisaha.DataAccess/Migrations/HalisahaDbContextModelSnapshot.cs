@@ -196,14 +196,15 @@ namespace Halisaha.DataAccess.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETDATE()");
 
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("PlayerId")
                         .HasColumnType("int");
 
                     b.Property<int>("SessionId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -250,7 +251,7 @@ namespace Halisaha.DataAccess.Migrations
                         .IsRequired();
 
                     b.HasOne("Halisaha.Entities.Session", "Session")
-                        .WithMany()
+                        .WithMany("ReservedSessions")
                         .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -277,6 +278,11 @@ namespace Halisaha.DataAccess.Migrations
                 });
 
             modelBuilder.Entity("Halisaha.Entities.Player", b =>
+                {
+                    b.Navigation("ReservedSessions");
+                });
+
+            modelBuilder.Entity("Halisaha.Entities.Session", b =>
                 {
                     b.Navigation("ReservedSessions");
                 });

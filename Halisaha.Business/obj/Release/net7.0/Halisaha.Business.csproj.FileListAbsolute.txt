@@ -1,0 +1,17 @@
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Business/bin/Release/net7.0/Halisaha.Business.deps.json
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Business/bin/Release/net7.0/Halisaha.Business.dll
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Business/bin/Release/net7.0/Halisaha.Business.pdb
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Business/bin/Release/net7.0/Halisaha.DataAccess.dll
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Business/bin/Release/net7.0/Halisaha.Entities.dll
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Business/bin/Release/net7.0/Halisaha.Entities.pdb
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Business/bin/Release/net7.0/Halisaha.DataAccess.pdb
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Business/obj/Release/net7.0/Halisaha.Business.csproj.AssemblyReference.cache
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Business/obj/Release/net7.0/Halisaha.Business.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Business/obj/Release/net7.0/Halisaha.Business.AssemblyInfoInputs.cache
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Business/obj/Release/net7.0/Halisaha.Business.AssemblyInfo.cs
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Business/obj/Release/net7.0/Halisaha.Business.csproj.CoreCompileInputs.cache
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Business/obj/Release/net7.0/Halisaha.Business.csproj.CopyComplete
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Business/obj/Release/net7.0/Halisaha.Business.dll
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Business/obj/Release/net7.0/refint/Halisaha.Business.dll
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Business/obj/Release/net7.0/Halisaha.Business.pdb
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.Business/obj/Release/net7.0/ref/Halisaha.Business.dll

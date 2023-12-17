@@ -77,3 +77,4 @@
 /Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.API/bin/Debug/net7.0/BCrypt.Net-Next.dll
 /Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.API/bin/Debug/net7.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
 /Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.API/bin/Debug/net7.0/Swashbuckle.AspNetCore.Annotations.dll
+/Users/ahmettatyuz/Documents/GitHub/Halisaha/Halisaha.API/bin/Debug/net7.0/Newtonsoft.Json.dll

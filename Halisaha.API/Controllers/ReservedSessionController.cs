@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Halisaha.Business.Abstract;
+﻿using Halisaha.Business.Abstract;
 using Halisaha.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -11,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Halisaha.API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class ReservedSessionController : Controller
     {
@@ -23,6 +21,7 @@ namespace Halisaha.API.Controllers
         [HttpPost]
         public async Task<IActionResult> ReserveSession([FromBody]ReservedSession reservedSession)
         {
+            reservedSession.CreateDate = DateTime.Now;
             return Ok(await _reservedSessionService.CreateReservedSession(reservedSession));
         }
 

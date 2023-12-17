@@ -15,7 +15,7 @@ public class HalisahaDbContext : DbContext
     {
         base.OnConfiguring(optionsBuilder);
         optionsBuilder.UseSqlServer("Server=localhost,1433;Database=HalisahaDB;User ID=sa;Password=Tatyuz51+;Encrypt=true;TrustServerCertificate=true;");
-        //optionsBuilder.UseSqlServer("Server=tcp:ahmettatyuz.database.windows.net,1433;Initial Catalog=ahmettatyuz;Persist Security Info=False;User ID=ahmettatyuz;Password=Tatyuz51+;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+        //optionsBuilder.UseSqlServer("Server=tcp:halisahadeneme-server.database.windows.net,1433;Initial Catalog=halisahadeneme-database;Persist Security Info=False;User ID=halisahadeneme-server-admin;Password=51053N1NK7VQ474H$;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

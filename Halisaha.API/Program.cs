@@ -1,4 +1,6 @@
 ﻿using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Halisaha.API.Security;
 using Halisaha.Business.Abstract;
 using Halisaha.Business.Concrete;
@@ -6,12 +8,13 @@ using Halisaha.DataAccess.Abstract;
 using Halisaha.DataAccess.Concrete;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers();
+//builder.Services.AddControllers();
 builder.Services.AddSingleton<IPlayerRepository, PlayerRepository>();
 builder.Services.AddSingleton<IPlayerService, PlayerManager>();
 builder.Services.AddSingleton<IOwnerService, OwnerManager>();
@@ -54,6 +57,18 @@ builder.Services.AddCors(options =>
 // rotaların en başına [Authorize] yazınca buradaki değerler ile request'in headerinden gelen token kontrol ediliyor ve ona göre rota çalışmış mı oluyor ?
 
 
+//builder.Services.AddControllers().AddNewtonsoftJson(options =>
+//    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+//);
+
+builder.Services.AddControllers(options =>
+{
+    options.OutputFormatters.RemoveType<SystemTextJsonOutputFormatter>();
+    options.OutputFormatters.Add(new SystemTextJsonOutputFormatter(new JsonSerializerOptions(JsonSerializerDefaults.Web)
+    {
+        ReferenceHandler = ReferenceHandler.IgnoreCycles,
+    }));
+});
 
 builder.Services.AddSwaggerGen(swagger =>
 {

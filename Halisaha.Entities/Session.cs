@@ -14,13 +14,16 @@ namespace Halisaha.Entities
 
         public int OwnerId { get; set; }
 
-        [JsonIgnore]
+        [SwaggerSchema(ReadOnly = true)]
         public Owner? Owner { get; set; } // navigation property
 
         [StringLength(50)]
         public string? SessionTime { get; set; }
 
         public DateTime CreateDate { get; set; } = DateTime.Now;
+
+        [JsonIgnore]
+        public List<ReservedSession>? ReservedSessions { get; set; }
     }
 }
 

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Halisaha.Business.Abstract;
@@ -12,8 +14,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Halisaha.API.Controllers
 {
     [Route("api/[controller]")]
-    //[Authorize]
-    [ApiController]
+    [Authorize]
+    //[ApiController]
     public class SessionController : Controller
     {
         private ISessionService _sessionService;
@@ -23,7 +25,7 @@ namespace Halisaha.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateSession(Session session)
+        public async Task<IActionResult> CreateSession([FromBody] Session session)
         {
             if (session.OwnerId > 0)
             {
@@ -40,7 +42,13 @@ namespace Halisaha.API.Controllers
         {
             if (ownerId > 0)
             {
-                return Ok(await _sessionService.GetSessionsByOwnerId(ownerId));
+                List<Session> sessions = await _sessionService.GetSessionsByOwnerId(ownerId);
+                List<Session> sortedSessions = sessions.OrderBy(session => DateTime.ParseExact(session.SessionTime, "H:m", CultureInfo.InvariantCulture)).ToList();
+                foreach (Session session in sortedSessions)
+                {
+                    session.SessionTime = DateTime.ParseExact(session.SessionTime, "H:m", CultureInfo.InvariantCulture).TimeOfDay.ToString().Substring(0, 5);
+                }
+                return Ok(sortedSessions);
             }
             else
             {
@@ -49,7 +57,7 @@ namespace Halisaha.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateSession([FromBody]Session session)
+        public async Task<IActionResult> UpdateSession([FromBody] Session session)
         {
             var result = _sessionService.GetSessionById(session.Id);
             if (result != null)
@@ -74,6 +82,20 @@ namespace Halisaha.API.Controllers
             else
             {
                 return NotFound("Seans bulunamadı.");
+            }
+        }
+
+        [HttpGet("{sessionId}")]
+        public async Task<IActionResult> GetOwnerBySessionId(int sessionId)
+        {
+            var result = await _sessionService.GetSessionById(sessionId);
+            if (result != null)
+            {
+                return Ok(result.Owner);
+            }
+            else
+            {
+                return BadRequest("Owner Bulunamadı");
             }
         }
     }

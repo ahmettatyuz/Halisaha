@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Halisaha.DataAccess.Migrations
 {
     [DbContext(typeof(HalisahaDbContext))]
-    [Migration("20231217154828_update5")]
-    partial class update5
+    [Migration("20231222190657_init3")]
+    partial class init3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -142,6 +142,9 @@ namespace Halisaha.DataAccess.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<DateTime>("Birthday")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("City")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -203,17 +206,17 @@ namespace Halisaha.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PlayerId")
+                    b.Property<int>("SessionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SessionId")
+                    b.Property<int>("TeamId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlayerId");
-
                     b.HasIndex("SessionId");
+
+                    b.HasIndex("TeamId");
 
                     b.ToTable("ReservedSessions");
                 });
@@ -245,23 +248,61 @@ namespace Halisaha.DataAccess.Migrations
                     b.ToTable("Sessions");
                 });
 
+            modelBuilder.Entity("Halisaha.Entities.Team", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CaptainPlayer")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("PlayerTeam", b =>
+                {
+                    b.Property<int>("PlayersId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeamsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PlayersId", "TeamsId");
+
+                    b.HasIndex("TeamsId");
+
+                    b.ToTable("PlayerTeam");
+                });
+
             modelBuilder.Entity("Halisaha.Entities.ReservedSession", b =>
                 {
-                    b.HasOne("Halisaha.Entities.Player", "Player")
-                        .WithMany("ReservedSessions")
-                        .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Halisaha.Entities.Session", "Session")
                         .WithMany("ReservedSessions")
                         .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Player");
+                    b.HasOne("Halisaha.Entities.Team", "Team")
+                        .WithMany("ReservedSessions")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Session");
+
+                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("Halisaha.Entities.Session", b =>
@@ -275,17 +316,32 @@ namespace Halisaha.DataAccess.Migrations
                     b.Navigation("Owner");
                 });
 
+            modelBuilder.Entity("PlayerTeam", b =>
+                {
+                    b.HasOne("Halisaha.Entities.Player", null)
+                        .WithMany()
+                        .HasForeignKey("PlayersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Halisaha.Entities.Team", null)
+                        .WithMany()
+                        .HasForeignKey("TeamsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Halisaha.Entities.Owner", b =>
                 {
                     b.Navigation("Sessions");
                 });
 
-            modelBuilder.Entity("Halisaha.Entities.Player", b =>
+            modelBuilder.Entity("Halisaha.Entities.Session", b =>
                 {
                     b.Navigation("ReservedSessions");
                 });
 
-            modelBuilder.Entity("Halisaha.Entities.Session", b =>
+            modelBuilder.Entity("Halisaha.Entities.Team", b =>
                 {
                     b.Navigation("ReservedSessions");
                 });

@@ -11,6 +11,8 @@ public class HalisahaDbContext : DbContext
     public DbSet<ReservedSession> ReservedSessions { get; set; }
     public DbSet<Session> Sessions { get; set; }
     public DbSet<Message> Messages { get; set; }
+    public DbSet<Team> Teams { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);

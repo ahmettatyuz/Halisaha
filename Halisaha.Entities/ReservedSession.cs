@@ -21,10 +21,10 @@ namespace Halisaha.Entities
         public Session? Session { get; set; }
 
         [Required]
-        public int PlayerId { get; set; }
+        public int TeamId { get; set; }
 
         [SwaggerSchema(ReadOnly = true)]
-        public Player? Player { get; set; }
+        public Team? Team { get; set; }
 
         public DateTime CreateDate { get; set; } = DateTime.Now;
     }

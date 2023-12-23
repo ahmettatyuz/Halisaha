@@ -138,6 +138,12 @@ namespace Halisaha.API.Controllers
                 return NotFound("Oyuncu bulunamadı.");
             }
         }
+
+        [HttpPatch("joinTeam")]
+        public async Task<IActionResult> PlayerJoinTeam(int playerId,int teamId)
+        {
+            return Ok(await _playerService.PlayerJoinTeam(playerId, teamId));
+        }
     }
 }
 

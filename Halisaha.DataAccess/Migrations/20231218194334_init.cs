@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Halisaha.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,7 +45,8 @@ namespace Halisaha.DataAccess.Migrations
                     Address = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Point = table.Column<double>(type: "float", nullable: false),
                     Coordinate1 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Coordinate2 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    Coordinate2 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -65,11 +66,27 @@ namespace Halisaha.DataAccess.Migrations
                     Phone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     City = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Position = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Position = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Players", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Team",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CaptainPlayer = table.Column<int>(type: "int", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Team", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -80,7 +97,7 @@ namespace Halisaha.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OwnerId = table.Column<int>(type: "int", nullable: false),
                     SessionTime = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
@@ -94,41 +111,71 @@ namespace Halisaha.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PlayerTeam",
+                columns: table => new
+                {
+                    PlayersId = table.Column<int>(type: "int", nullable: false),
+                    TeamsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlayerTeam", x => new { x.PlayersId, x.TeamsId });
+                    table.ForeignKey(
+                        name: "FK_PlayerTeam_Players_PlayersId",
+                        column: x => x.PlayersId,
+                        principalTable: "Players",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PlayerTeam_Team_TeamsId",
+                        column: x => x.TeamsId,
+                        principalTable: "Team",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ReservedSessions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Time = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Date = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SessionId = table.Column<int>(type: "int", nullable: false),
-                    PlayerId = table.Column<int>(type: "int", nullable: false)
+                    TeamId = table.Column<int>(type: "int", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ReservedSessions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ReservedSessions_Players_PlayerId",
-                        column: x => x.PlayerId,
-                        principalTable: "Players",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ReservedSessions_Sessions_SessionId",
                         column: x => x.SessionId,
                         principalTable: "Sessions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ReservedSessions_Team_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Team",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ReservedSessions_PlayerId",
-                table: "ReservedSessions",
-                column: "PlayerId");
+                name: "IX_PlayerTeam_TeamsId",
+                table: "PlayerTeam",
+                column: "TeamsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ReservedSessions_SessionId",
                 table: "ReservedSessions",
                 column: "SessionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReservedSessions_TeamId",
+                table: "ReservedSessions",
+                column: "TeamId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sessions_OwnerId",
@@ -143,6 +190,9 @@ namespace Halisaha.DataAccess.Migrations
                 name: "Messages");
 
             migrationBuilder.DropTable(
+                name: "PlayerTeam");
+
+            migrationBuilder.DropTable(
                 name: "ReservedSessions");
 
             migrationBuilder.DropTable(
@@ -150,6 +200,9 @@ namespace Halisaha.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Sessions");
+
+            migrationBuilder.DropTable(
+                name: "Team");
 
             migrationBuilder.DropTable(
                 name: "Owners");

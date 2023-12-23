@@ -41,11 +41,12 @@ public class Player
     [StringLength(50)]
     public string? Position { get; set; }
 
+    [Required]
+    public DateTime Birthday { get; set; }
+
     public DateTime CreateDate { get; set; } = DateTime.Now;
 
-    [SwaggerSchema(ReadOnly = true)]
-    [JsonIgnore]
-    public List<ReservedSession>? ReservedSessions { get; set; }
+    public List<Team>? Teams { get; set; }
 
 }
 

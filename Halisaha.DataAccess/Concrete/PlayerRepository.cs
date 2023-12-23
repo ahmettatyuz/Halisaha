@@ -49,7 +49,20 @@ namespace Halisaha.DataAccess.Concrete
         {
             using (var halisahaDbContext = new HalisahaDbContext())
             {
-                return await halisahaDbContext.Players.ToListAsync();
+                return await halisahaDbContext.Players.Include(x=>x.Teams).ToListAsync();
+            }
+        }
+
+        public async Task<Player> PlayerJoinTeam(int playerId,int teamId)
+        {
+            using (var halisahaDbContext = new HalisahaDbContext())
+            {
+                var player = await halisahaDbContext.Players.FindAsync(playerId);
+                var team = await halisahaDbContext.Teams.FindAsync(teamId);
+                player.Teams.Add(team);
+                team.Players.Add(player);
+                await halisahaDbContext.SaveChangesAsync();
+                return player;
             }
         }
 

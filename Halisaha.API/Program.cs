@@ -17,6 +17,8 @@ var builder = WebApplication.CreateBuilder(args);
 //builder.Services.AddControllers();
 builder.Services.AddSingleton<IPlayerRepository, PlayerRepository>();
 builder.Services.AddSingleton<IPlayerService, PlayerManager>();
+builder.Services.AddSingleton<ITeamRepository, TeamRepository>();
+builder.Services.AddSingleton<ITeamService, TeamManager>();
 builder.Services.AddSingleton<IOwnerService, OwnerManager>();
 builder.Services.AddSingleton<IOwnerRepository, OwnerRepository>();
 builder.Services.AddSingleton<ISessionRepository, SessionRepository>();

@@ -40,6 +40,11 @@ namespace Halisaha.Business.Concrete
             return await _playerRepository.GetPlayers();
         }
 
+        public async Task<Player> PlayerJoinTeam(int playerId, int teamId)
+        {
+            return await _playerRepository.PlayerJoinTeam(playerId, teamId);
+        }
+
         public async Task<Player> UpdatePlayer(Player player)
         {
             

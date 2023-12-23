@@ -40,7 +40,7 @@ namespace Halisaha.DataAccess.Concrete
         {
             using (var halisahaDbContext = new HalisahaDbContext())
             {
-                return await halisahaDbContext.ReservedSessions.Where(x => x.Session!.Owner!.Id == id).Include(x => x.Player).Include(x => x.Session).Include(x => x.Session.Owner).ToListAsync();
+                return await halisahaDbContext.ReservedSessions.Where(x => x.Session!.Owner!.Id == id).Include(x => x.Team).Include(x => x.Session).Include(x => x.Session.Owner).ToListAsync();
             }
         }
 
@@ -48,7 +48,7 @@ namespace Halisaha.DataAccess.Concrete
         {
             using (var halisahaDbContext = new HalisahaDbContext())
             {
-                return await halisahaDbContext.ReservedSessions.Where(x => x.PlayerId! == id).Include(x=>x.Player).Include(x=>x.Session).Include(x=>x.Session.Owner).ToListAsync();
+                return await halisahaDbContext.ReservedSessions.Where(x => x.TeamId! == id).Include(x=>x.Team).Include(x=>x.Session).Include(x=>x.Session.Owner).ToListAsync();
             }
         }
 

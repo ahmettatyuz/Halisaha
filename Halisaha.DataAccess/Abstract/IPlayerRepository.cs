@@ -17,6 +17,8 @@ namespace Halisaha.DataAccess.Abstract
 
 		Task<Player> UpdatePlayer(Player player);
 
+		Task<Player> PlayerJoinTeam(int playerId,int teamId);
+
 	}
 }
 

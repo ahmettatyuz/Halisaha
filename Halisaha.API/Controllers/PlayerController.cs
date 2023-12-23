@@ -95,7 +95,7 @@ namespace Halisaha.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdatePlayer(Player player)
+        public async Task<IActionResult> UpdatePlayer([FromBody]Player player)
         {
             var result = await _playerService.GetPlayerById(player.Id);
             if (result != null)

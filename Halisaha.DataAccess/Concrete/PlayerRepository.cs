@@ -10,7 +10,7 @@ namespace Halisaha.DataAccess.Concrete
     {
         public async Task<Player> CreatePlayer(Player player)
         {
-            using(var halisahaDbContext = new HalisahaDbContext())
+            using (var halisahaDbContext = new HalisahaDbContext())
             {
                 halisahaDbContext.Players.Add(player);
                 await halisahaDbContext.SaveChangesAsync();
@@ -33,7 +33,7 @@ namespace Halisaha.DataAccess.Concrete
         {
             using (var halisahaDbContext = new HalisahaDbContext())
             {
-                return await halisahaDbContext.Players.FindAsync(id);
+                return await halisahaDbContext.Players.Include(x=>x.Teams).Where(x=>x.Id==id).FirstOrDefaultAsync();
             }
         }
 
@@ -49,19 +49,39 @@ namespace Halisaha.DataAccess.Concrete
         {
             using (var halisahaDbContext = new HalisahaDbContext())
             {
-                return await halisahaDbContext.Players.Include(x=>x.Teams).ToListAsync();
+                return await halisahaDbContext.Players.Include(x => x.Teams).ToListAsync();
             }
         }
 
-        public async Task<Player> PlayerJoinTeam(int playerId,int teamId)
+        public async Task<Player> PlayerJoinTeam(int playerId, int teamId)
         {
             using (var halisahaDbContext = new HalisahaDbContext())
             {
                 var player = await halisahaDbContext.Players.FindAsync(playerId);
                 var team = await halisahaDbContext.Teams.FindAsync(teamId);
-                player.Teams.Add(team);
-                team.Players.Add(player);
-                await halisahaDbContext.SaveChangesAsync();
+                if (player != null && team != null)
+                {
+                    if (player.Teams == null)
+                    {
+                        player.Teams = new List<Team> { team };
+                    }
+                    else
+                    {
+                        player.Teams!.Add(team);
+                    }
+
+                    if (team.Players == null)
+                    {
+                        team.Players = new List<Player> { player };
+                    }
+                    else
+                    {
+                        team.Players!.Add(player);
+                    }
+
+
+                    await halisahaDbContext.SaveChangesAsync();
+                }
                 return player;
             }
         }

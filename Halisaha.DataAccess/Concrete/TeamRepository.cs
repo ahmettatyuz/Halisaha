@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Halisaha.DataAccess.Concrete
 {
-	public class TeamRepository : ITeamRepository
-	{
+    public class TeamRepository : ITeamRepository
+    {
         public async Task<Team> CreateTeam(Team team)
         {
             using (var halisahaDbContext = new HalisahaDbContext())
@@ -32,15 +32,30 @@ namespace Halisaha.DataAccess.Concrete
         {
             using (var halisahaDbContext = new HalisahaDbContext())
             {
-                return await halisahaDbContext.Teams.Include(x=>x.Players).Where(x=>x.Id==id).FirstOrDefaultAsync();
+                return await halisahaDbContext.Teams.Where(x => x.Id == id).FirstOrDefaultAsync();
             }
         }
 
         public async Task<List<Team>> GetTeams()
         {
-            using(var halisahaDbContext = new HalisahaDbContext())
+            using (var halisahaDbContext = new HalisahaDbContext())
             {
-                return await halisahaDbContext.Teams.Include(x=>x.Players).ToListAsync();
+
+                return await halisahaDbContext.Teams.ToListAsync();
+            }
+        }
+
+        public async Task<List<Player>> GetPlayersInTeam(int teamId)
+        {
+            using (var halisahaDbContext = new HalisahaDbContext())
+            {
+                List<Player> players = new List<Player>();
+                List<PlayerTeam> playerTeams = await halisahaDbContext.PlayerTeams.Where(x=>x.TeamId==teamId).Include(x=>x.Player).ToListAsync();
+                foreach(PlayerTeam playerTeam in playerTeams){
+                    players.Add(playerTeam.Player);
+                }
+
+                return players;
             }
         }
 

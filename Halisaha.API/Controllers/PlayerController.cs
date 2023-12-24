@@ -12,10 +12,12 @@ namespace Halisaha.API.Controllers
 {
     using BCrypt.Net;
     using Halisaha.API.Models;
+    using Microsoft.Data.SqlClient;
+    using Microsoft.EntityFrameworkCore;
 
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    // [Authorize]
     public class PlayerController : Controller
     {
         private IPlayerService _playerService;
@@ -85,17 +87,23 @@ namespace Halisaha.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllPlayers()
         {
-            return Ok(await _playerService.GetPlayers());
+            List<Player> players = await _playerService.GetPlayers();
+            foreach(Player player in players){
+                player.Teams =await _playerService.GetTeamsForPlayer(player.Id);
+            }
+            return Ok(players);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPlayerById(int id)
         {
-            return Ok(await _playerService.GetPlayerById(id));
+            Player player = await _playerService.GetPlayerById(id);
+            player.Teams = await _playerService.GetTeamsForPlayer(id);
+            return Ok(player);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdatePlayer([FromBody]Player player)
+        public async Task<IActionResult> UpdatePlayer([FromBody] Player player)
         {
             var result = await _playerService.GetPlayerById(player.Id);
             if (result != null)
@@ -116,7 +124,7 @@ namespace Halisaha.API.Controllers
             bool verify = BCrypt.EnhancedVerify(model.oldPassword, result.Password);
             if (result != null)
             {
-                result.Password= BCrypt.EnhancedHashPassword(model.password) ;
+                result.Password = BCrypt.EnhancedHashPassword(model.password);
                 return Ok(await _playerService.UpdatePlayer(result));
             }
             else
@@ -140,9 +148,24 @@ namespace Halisaha.API.Controllers
         }
 
         [HttpPatch("joinTeam")]
-        public async Task<IActionResult> PlayerJoinTeam(int playerId,int teamId)
+        public async Task<IActionResult> PlayerJoinTeam(int playerId, int teamId)
         {
-            return Ok(await _playerService.PlayerJoinTeam(playerId, teamId));
+            try
+            {
+                return Ok(await _playerService.PlayerJoinTeam(playerId, teamId));
+
+            }
+            catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx)
+            {
+                if (sqlEx.Number == 2627)
+                {
+                    return BadRequest("Bu oyuncu zaten bu takımın kadrosunda bulunmaktadır.");
+                }
+                else
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
         }
     }
 }

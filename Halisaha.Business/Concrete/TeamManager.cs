@@ -23,6 +23,11 @@ namespace Halisaha.Business.Concrete
             return await _teamRepository.DeleteTeam(id);
         }
 
+        public async Task<List<Player>> GetPlayersInTeam(int teamId)
+        {
+            return await _teamRepository.GetPlayersInTeam(teamId);
+        }
+
         public async Task<Team> GetTeam(int id)
         {
             return await _teamRepository.GetTeam(id);

@@ -9,7 +9,7 @@ namespace Halisaha.API.Controllers
     //[Authorize]
     [Route("api/[controller]")]
     public class TeamController : Controller
-	{
+    {
         private ITeamService _teamService;
         public TeamController(ITeamService teamService)
         {
@@ -19,15 +19,21 @@ namespace Halisaha.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetTeams()
         {
-            return Ok(await _teamService.GetTeams());
+            List<Team> teams = await _teamService.GetTeams();
+            foreach(Team team in teams){
+                team.Players = await _teamService.GetPlayersInTeam(team.Id);
+            }
+            return Ok(teams);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTeam(int id)
         {
             var result = await _teamService.GetTeam(id);
+
             if (result != null)
             {
+                result.Players = await _teamService.GetPlayersInTeam(result.Id);
                 return Ok(result);
             }
             else
@@ -48,23 +54,17 @@ namespace Halisaha.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTeam([FromBody]Team team)
+        public async Task<IActionResult> CreateTeam([FromBody] Team team)
         {
-            if (ModelState.IsValid)
-            {
-                return Ok(await _teamService.CreateTeam(team));
-            }
-            else
-            {
-                return BadRequest("Tüm zorunlu alanlar doldurulmalıdır.");
-            }
+            return Ok(await _teamService.CreateTeam(team));
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateTeam(Team team) {
+        public async Task<IActionResult> UpdateTeam(Team team)
+        {
             var result = await _teamService.GetTeam(team.Id);
 
-            if(result != null)
+            if (result != null)
             {
                 return Ok(await _teamService.UpdateTeam(team));
             }
@@ -75,6 +75,6 @@ namespace Halisaha.API.Controllers
 
         }
 
-	}
+    }
 }
 

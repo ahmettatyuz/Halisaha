@@ -6,12 +6,14 @@ namespace Halisaha.DataAccess;
 public class HalisahaDbContext : DbContext
 {
     //burada eklemiş olduğumuz dbset'ler sayesinde database tabloları oluşturulabiliyor ve kullanılabiliyor
+
     public DbSet<Player> Players { get; set; }
     public DbSet<Owner> Owners { get; set; }
     public DbSet<ReservedSession> ReservedSessions { get; set; }
     public DbSet<Session> Sessions { get; set; }
     public DbSet<Message> Messages { get; set; }
     public DbSet<Team> Teams { get; set; }
+    public DbSet<PlayerTeam> PlayerTeams { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -23,7 +25,7 @@ public class HalisahaDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        //modelBuilder.Entity<ReservedSession>().HasKey(a => new { a.PlayerId, a.SessionId });
+        // modelBuilder.Entity<PlayerTeam>().HasKey(a => new { a.PlayerId, a.TeamId });
         modelBuilder.Entity<Owner>()
         .Property(e => e.CreateDate)
         .HasDefaultValueSql("GETDATE()");
@@ -36,5 +38,8 @@ public class HalisahaDbContext : DbContext
         modelBuilder.Entity<Session>()
         .Property(e => e.CreateDate)
         .HasDefaultValueSql("GETDATE()");
+
+    modelBuilder.Entity<PlayerTeam>()
+        .HasKey(pt => new { pt.PlayerId, pt.TeamId });
     }
 }

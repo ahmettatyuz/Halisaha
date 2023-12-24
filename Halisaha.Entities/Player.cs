@@ -46,7 +46,7 @@ public class Player
 
     public DateTime CreateDate { get; set; } = DateTime.Now;
 
-    public List<Team>? Teams { get; set; }
+    public List<Team> Teams { get; set; }
 
 }
 

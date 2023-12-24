@@ -17,6 +17,8 @@ namespace Halisaha.Business.Abstract
         Task<Player> UpdatePlayer(Player player);
 
         Task<Player> PlayerJoinTeam(int playerId, int teamId);
+
+        Task<List<Team>> GetTeamsForPlayer(int playerId);
     }
 }
 

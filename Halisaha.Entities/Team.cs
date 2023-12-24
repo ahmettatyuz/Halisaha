@@ -16,7 +16,7 @@ namespace Halisaha.Entities
 		[Required]
 		public int CaptainPlayer { get; set; }
 
-		public List<Player>? Players { get; set; }
+		public List<Player> Players { get; set; }
 
         public List<ReservedSession>? ReservedSessions { get; set; }
 

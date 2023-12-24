@@ -14,5 +14,7 @@ namespace Halisaha.DataAccess.Abstract
 		Task<Team> UpdateTeam(Team team);
 
 		Task<Team> CreateTeam(Team team);
+
+		Task<List<Player>> GetPlayersInTeam(int teamId);
 	}
 }

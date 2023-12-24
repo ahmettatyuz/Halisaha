@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Numerics;
 using Halisaha.DataAccess.Abstract;
 using Halisaha.Entities;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace Halisaha.DataAccess.Concrete
@@ -33,7 +35,10 @@ namespace Halisaha.DataAccess.Concrete
         {
             using (var halisahaDbContext = new HalisahaDbContext())
             {
-                return await halisahaDbContext.Players.Include(x=>x.Teams).Where(x=>x.Id==id).FirstOrDefaultAsync();
+                var teams = halisahaDbContext.PlayerTeams.Where(x => x.PlayerId == id);
+                var playerandteams = await halisahaDbContext.Players.Where(x => x.Id == id).FirstOrDefaultAsync();
+                return playerandteams;
+                // return await halisahaDbContext.Players.Include(x => x.Teams).Where(x => x.Id == id).FirstOrDefaultAsync();
             }
         }
 
@@ -41,7 +46,7 @@ namespace Halisaha.DataAccess.Concrete
         {
             using (var halisahaDbContext = new HalisahaDbContext())
             {
-                return halisahaDbContext.Players.FirstOrDefault(x => x.Phone == phone);
+                return await halisahaDbContext.Players.FirstOrDefaultAsync(x => x.Phone == phone);
             }
         }
 
@@ -49,8 +54,23 @@ namespace Halisaha.DataAccess.Concrete
         {
             using (var halisahaDbContext = new HalisahaDbContext())
             {
-                return await halisahaDbContext.Players.Include(x => x.Teams).ToListAsync();
+                return await halisahaDbContext.Players.ToListAsync();
             }
+        }
+
+        public async Task<List<Team>> GetTeamsForPlayer(int playerId)
+        {
+            using (var halisahaDbContext = new HalisahaDbContext())
+            {
+                List<Team> teams = new List<Team>();
+                List<PlayerTeam> playerTeams = await halisahaDbContext.PlayerTeams.Where(x => x.PlayerId == playerId).Include(x => x.Team).ToListAsync();
+                foreach (PlayerTeam playerTeam in playerTeams)
+                {
+                    teams.Add(playerTeam.Team);
+                }
+                return teams;
+            }
+
         }
 
         public async Task<Player> PlayerJoinTeam(int playerId, int teamId)
@@ -58,33 +78,51 @@ namespace Halisaha.DataAccess.Concrete
             using (var halisahaDbContext = new HalisahaDbContext())
             {
                 var player = await halisahaDbContext.Players.FindAsync(playerId);
-                var team = await halisahaDbContext.Teams.FindAsync(teamId);
-                if (player != null && team != null)
-                {
-                    if (player.Teams == null)
-                    {
-                        player.Teams = new List<Team> { team };
-                    }
-                    else
-                    {
-                        player.Teams!.Add(team);
-                    }
-
-                    if (team.Players == null)
-                    {
-                        team.Players = new List<Player> { player };
-                    }
-                    else
-                    {
-                        team.Players!.Add(player);
-                    }
-
-
-                    await halisahaDbContext.SaveChangesAsync();
-                }
+                PlayerTeam playerTeam = new PlayerTeam();
+                playerTeam.PlayerId = playerId;
+                playerTeam.TeamId = teamId;
+                await halisahaDbContext.PlayerTeams.AddAsync(playerTeam);
+                await halisahaDbContext.SaveChangesAsync();
                 return player;
             }
         }
+
+        // public async Task<Player> PlayerJoinTeam(int playerId, int teamId)
+        // {
+        //     using (var halisahaDbContext = new HalisahaDbContext())
+        //     {
+        //         var player = await halisahaDbContext.Players.FindAsync(playerId);
+        //         var team = await halisahaDbContext.Teams.FindAsync(teamId);
+        //         if (player != null && team != null)
+        //         {
+        //             if (player.Teams == null)
+        //             {
+        //                 player.Teams = new List<Team> { team };
+        //             }
+        //             else
+        //             {
+        //                 player.Teams!.Add(team);
+        //             }
+
+        //             if (team.Players == null)
+        //             {
+        //                 team.Players = new List<Player> { player };
+        //             }
+        //             else
+        //             {
+        //                 team.Players!.Add(player);
+        //             }
+
+        //             await halisahaDbContext.SaveChangesAsync();
+
+        //         }
+        //         return player;
+        //     }
+        // }
+
+
+
+
 
         public async Task<Player> UpdatePlayer(Player player)
         {

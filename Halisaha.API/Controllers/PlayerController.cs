@@ -16,7 +16,7 @@ namespace Halisaha.API.Controllers
     using Microsoft.EntityFrameworkCore;
 
     [Route("api/[controller]")]
-    [ApiController]
+    // [ApiController]
     // [Authorize]
     public class PlayerController : Controller
     {

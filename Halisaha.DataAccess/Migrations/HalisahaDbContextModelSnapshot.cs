@@ -218,17 +218,22 @@ namespace Halisaha.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SessionId")
+                    b.Property<int>("DeplasmanTakimId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TeamId")
+                    b.Property<int>("EvSahibiTakimId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SessionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SessionId");
+                    b.HasIndex("DeplasmanTakimId");
 
-                    b.HasIndex("TeamId");
+                    b.HasIndex("EvSahibiTakimId");
+
+                    b.HasIndex("SessionId");
 
                     b.ToTable("ReservedSessions");
                 });
@@ -283,16 +288,31 @@ namespace Halisaha.DataAccess.Migrations
                     b.ToTable("Teams");
                 });
 
+            modelBuilder.Entity("PlayerTeam", b =>
+                {
+                    b.Property<int>("PlayersId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeamsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PlayersId", "TeamsId");
+
+                    b.HasIndex("TeamsId");
+
+                    b.ToTable("PlayerTeam");
+                });
+
             modelBuilder.Entity("Halisaha.Entities.PlayerTeam", b =>
                 {
                     b.HasOne("Halisaha.Entities.Player", "Player")
-                        .WithMany("PlayerTeams")
+                        .WithMany()
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Halisaha.Entities.Team", "Team")
-                        .WithMany("PlayerTeams")
+                        .WithMany()
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -304,21 +324,29 @@ namespace Halisaha.DataAccess.Migrations
 
             modelBuilder.Entity("Halisaha.Entities.ReservedSession", b =>
                 {
+                    b.HasOne("Halisaha.Entities.Team", "DeplasmanTakim")
+                        .WithMany()
+                        .HasForeignKey("DeplasmanTakimId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Halisaha.Entities.Team", "EvSahibiTakim")
+                        .WithMany("ReservedSessions")
+                        .HasForeignKey("EvSahibiTakimId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Halisaha.Entities.Session", "Session")
                         .WithMany("ReservedSessions")
                         .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Halisaha.Entities.Team", "Team")
-                        .WithMany("ReservedSessions")
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("DeplasmanTakim");
+
+                    b.Navigation("EvSahibiTakim");
 
                     b.Navigation("Session");
-
-                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("Halisaha.Entities.Session", b =>
@@ -332,14 +360,24 @@ namespace Halisaha.DataAccess.Migrations
                     b.Navigation("Owner");
                 });
 
+            modelBuilder.Entity("PlayerTeam", b =>
+                {
+                    b.HasOne("Halisaha.Entities.Player", null)
+                        .WithMany()
+                        .HasForeignKey("PlayersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Halisaha.Entities.Team", null)
+                        .WithMany()
+                        .HasForeignKey("TeamsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Halisaha.Entities.Owner", b =>
                 {
                     b.Navigation("Sessions");
-                });
-
-            modelBuilder.Entity("Halisaha.Entities.Player", b =>
-                {
-                    b.Navigation("PlayerTeams");
                 });
 
             modelBuilder.Entity("Halisaha.Entities.Session", b =>
@@ -349,8 +387,6 @@ namespace Halisaha.DataAccess.Migrations
 
             modelBuilder.Entity("Halisaha.Entities.Team", b =>
                 {
-                    b.Navigation("PlayerTeams");
-
                     b.Navigation("ReservedSessions");
                 });
 #pragma warning restore 612, 618

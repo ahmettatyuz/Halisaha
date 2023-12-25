@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Halisaha.DataAccess.Abstract;
 using Halisaha.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -40,7 +41,21 @@ namespace Halisaha.DataAccess.Concrete
         {
             using (var halisahaDbContext = new HalisahaDbContext())
             {
-                return await halisahaDbContext.ReservedSessions.Where(x => x.Session!.Owner!.Id == id).Include(x => x.Team).Include(x => x.Session).Include(x => x.Session.Owner).ToListAsync();
+                List<Session> sessions = halisahaDbContext.Sessions.Where(x => x.OwnerId == id).ToList();
+                List<ReservedSession> reservedSessions = await halisahaDbContext.ReservedSessions.Where(x => sessions.Contains(x.Session)).Include(x => x.DeplasmanTakim).Include(x => x.EvSahibiTakim).ToListAsync();
+                foreach (ReservedSession reservedSession in reservedSessions)
+                {
+                    if (reservedSession.DeplasmanTakim.ReservedSessions != null)
+                    {
+                        reservedSession.DeplasmanTakim.ReservedSessions = null;
+                    }
+                    if (reservedSession.EvSahibiTakim.ReservedSessions != null)
+                    {
+                        reservedSession.EvSahibiTakim.ReservedSessions = null;
+                    }
+                }
+
+                return reservedSessions;
             }
         }
 
@@ -48,7 +63,28 @@ namespace Halisaha.DataAccess.Concrete
         {
             using (var halisahaDbContext = new HalisahaDbContext())
             {
-                return await halisahaDbContext.ReservedSessions.Where(x => x.TeamId! == id).Include(x=>x.Team).Include(x=>x.Session).Include(x=>x.Session.Owner).ToListAsync();
+                List<Team> teams = await halisahaDbContext.PlayerTeams
+                    .Where(x => x.PlayerId == id)
+                    .Select(playerTeam => playerTeam.Team)
+                    .ToListAsync();
+
+                List<ReservedSession> reservedSessions = await halisahaDbContext.ReservedSessions.Where(x => teams.Contains(x.DeplasmanTakim) || teams.Contains(x.EvSahibiTakim)).Include(x=>x.Session).ThenInclude(x=>x.Owner).Include(x => x.DeplasmanTakim).Include(x => x.EvSahibiTakim).ToListAsync();
+
+                foreach (ReservedSession reservedSession in reservedSessions)
+                {
+                    if (reservedSession.DeplasmanTakim.ReservedSessions != null)
+                    {
+                        reservedSession.DeplasmanTakim.ReservedSessions = null;
+                    }
+                    if (reservedSession.EvSahibiTakim.ReservedSessions != null)
+                    {
+                        reservedSession.EvSahibiTakim.ReservedSessions = null;
+                    }
+
+                    reservedSession.Session.Owner.Sessions=null;
+                }
+
+                return reservedSessions;
             }
         }
 

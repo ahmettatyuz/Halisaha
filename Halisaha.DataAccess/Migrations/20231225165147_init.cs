@@ -67,6 +67,7 @@ namespace Halisaha.DataAccess.Migrations
                     City = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Position = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Birthday = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
@@ -75,7 +76,7 @@ namespace Halisaha.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Team",
+                name: "Teams",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -86,7 +87,7 @@ namespace Halisaha.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Team", x => x.Id);
+                    table.PrimaryKey("PK_Teams", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -127,9 +128,33 @@ namespace Halisaha.DataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PlayerTeam_Team_TeamsId",
+                        name: "FK_PlayerTeam_Teams_TeamsId",
                         column: x => x.TeamsId,
-                        principalTable: "Team",
+                        principalTable: "Teams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PlayerTeams",
+                columns: table => new
+                {
+                    PlayerId = table.Column<int>(type: "int", nullable: false),
+                    TeamId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlayerTeams", x => new { x.PlayerId, x.TeamId });
+                    table.ForeignKey(
+                        name: "FK_PlayerTeams_Players_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Players",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PlayerTeams_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -142,7 +167,8 @@ namespace Halisaha.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SessionId = table.Column<int>(type: "int", nullable: false),
-                    TeamId = table.Column<int>(type: "int", nullable: false),
+                    EvSahibiTakimId = table.Column<int>(type: "int", nullable: false),
+                    DeplasmanTakimId = table.Column<int>(type: "int", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
                 constraints: table =>
@@ -155,11 +181,17 @@ namespace Halisaha.DataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ReservedSessions_Team_TeamId",
-                        column: x => x.TeamId,
-                        principalTable: "Team",
+                        name: "FK_ReservedSessions_Teams_DeplasmanTakimId",
+                        column: x => x.DeplasmanTakimId,
+                        principalTable: "Teams",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ReservedSessions_Teams_EvSahibiTakimId",
+                        column: x => x.EvSahibiTakimId,
+                        principalTable: "Teams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -168,14 +200,24 @@ namespace Halisaha.DataAccess.Migrations
                 column: "TeamsId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PlayerTeams_TeamId",
+                table: "PlayerTeams",
+                column: "TeamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReservedSessions_DeplasmanTakimId",
+                table: "ReservedSessions",
+                column: "DeplasmanTakimId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReservedSessions_EvSahibiTakimId",
+                table: "ReservedSessions",
+                column: "EvSahibiTakimId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ReservedSessions_SessionId",
                 table: "ReservedSessions",
                 column: "SessionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ReservedSessions_TeamId",
-                table: "ReservedSessions",
-                column: "TeamId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sessions_OwnerId",
@@ -193,6 +235,9 @@ namespace Halisaha.DataAccess.Migrations
                 name: "PlayerTeam");
 
             migrationBuilder.DropTable(
+                name: "PlayerTeams");
+
+            migrationBuilder.DropTable(
                 name: "ReservedSessions");
 
             migrationBuilder.DropTable(
@@ -202,7 +247,7 @@ namespace Halisaha.DataAccess.Migrations
                 name: "Sessions");
 
             migrationBuilder.DropTable(
-                name: "Team");
+                name: "Teams");
 
             migrationBuilder.DropTable(
                 name: "Owners");

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Halisaha.API.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
+    // [Authorize]
     [ApiController]
     public class ReservedSessionController : Controller
     {

@@ -16,7 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace Halisaha.API.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
+    // [Authorize]
     //[ApiController]
     [EnableCors("_myAllowSpecificOrigins")]
     public class OwnerController : Controller

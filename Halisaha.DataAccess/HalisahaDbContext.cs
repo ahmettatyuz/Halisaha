@@ -24,7 +24,7 @@ public class HalisahaDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
+
         // modelBuilder.Entity<PlayerTeam>().HasKey(a => new { a.PlayerId, a.TeamId });
         modelBuilder.Entity<Owner>()
         .Property(e => e.CreateDate)
@@ -39,7 +39,36 @@ public class HalisahaDbContext : DbContext
         .Property(e => e.CreateDate)
         .HasDefaultValueSql("GETDATE()");
 
-    modelBuilder.Entity<PlayerTeam>()
-        .HasKey(pt => new { pt.PlayerId, pt.TeamId });
+        modelBuilder.Entity<PlayerTeam>()
+            .HasKey(pt => new { pt.PlayerId, pt.TeamId });
+
+
+        modelBuilder.Entity<ReservedSession>()
+                .HasOne(rs => rs.EvSahibiTakim)
+                .WithMany(t => t.ReservedSessions)
+                .HasForeignKey(rs => rs.EvSahibiTakimId)
+                .OnDelete(DeleteBehavior.Restrict);;
+
+        modelBuilder.Entity<ReservedSession>()
+                .HasOne(rs => rs.DeplasmanTakim)
+                .WithMany()
+                .HasForeignKey(rs => rs.DeplasmanTakimId)
+                .OnDelete(DeleteBehavior.Restrict);;
+
+        // modelBuilder.Entity<Team>()
+        //     .Ignore(t => t.ReservedSessions);
+        // modelBuilder.Entity<ReservedSession>()
+        // .HasOne(r => r.EvSahibiTakım)
+        // .WithMany(t => t.EvSahibiRezervasyonlar)
+        // .HasForeignKey(r => r.EvSahibiTakımID)
+        // .OnDelete(DeleteBehavior.Restrict);
+
+        // modelBuilder.Entity<Rezervasyon>()
+        //     .HasOne(r => r.MisafirTakım)
+        //     .WithMany(t => t.MisafirRezervasyonlar)
+        //     .HasForeignKey(r => r.MisafirTakımID)
+        //     .OnDelete(DeleteBehavior.Restrict);
+
+        base.OnModelCreating(modelBuilder);
     }
 }

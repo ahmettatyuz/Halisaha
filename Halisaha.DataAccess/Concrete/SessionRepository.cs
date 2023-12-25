@@ -2,6 +2,7 @@
 using Halisaha.DataAccess.Abstract;
 using Halisaha.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Halisaha.DataAccess.Concrete
 {
@@ -32,7 +33,9 @@ namespace Halisaha.DataAccess.Concrete
         {
             using (var halisahaDbContext = new HalisahaDbContext())
             {
-                return await halisahaDbContext.Sessions.Where(x => x.Id != id).Include(x => x.Owner).FirstOrDefaultAsync();
+                Session session = await halisahaDbContext.Sessions.Where(x => x.Id == id).Include(x => x.Owner).FirstOrDefaultAsync();
+                session.Owner.Sessions=null;
+                return session;
             }
         }
 
@@ -40,7 +43,12 @@ namespace Halisaha.DataAccess.Concrete
         {
             using (var halisahaDbContext = new HalisahaDbContext())
             {
-                return await halisahaDbContext.Sessions.Where(x => x.Owner.Id == ownerId).Include(x=>x.Owner).ToListAsync();
+                List<Session> sessions =  await halisahaDbContext.Sessions.Where(x => x.Owner.Id == ownerId).Include(x=>x.Owner).ToListAsync();
+
+                foreach(Session session in sessions){
+                    session.Owner.Sessions=null;
+                }
+                return sessions;
             }
         }
 

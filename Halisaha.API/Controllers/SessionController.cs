@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Halisaha.API.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
+    // [Authorize]
     //[ApiController]
     public class SessionController : Controller
     {
@@ -91,11 +91,11 @@ namespace Halisaha.API.Controllers
             var result = await _sessionService.GetSessionById(sessionId);
             if (result != null)
             {
-                return Ok(result.Owner);
+                return Ok(result);
             }
             else
             {
-                return BadRequest("Owner Bulunamadı");
+                return BadRequest("Seans Bulunamadı");
             }
         }
     }

@@ -2,7 +2,6 @@
 using Halisaha.DataAccess.Abstract;
 using Halisaha.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Halisaha.DataAccess.Concrete
 {
@@ -10,7 +9,7 @@ namespace Halisaha.DataAccess.Concrete
     {
         public async Task<Session> CreateSession(Session session)
         {
-            using(var halisahaDbContext = new HalisahaDbContext())
+            using (var halisahaDbContext = new HalisahaDbContext())
             {
                 halisahaDbContext.Sessions.Add(session);
                 await halisahaDbContext.SaveChangesAsync();
@@ -34,8 +33,15 @@ namespace Halisaha.DataAccess.Concrete
             using (var halisahaDbContext = new HalisahaDbContext())
             {
                 Session session = await halisahaDbContext.Sessions.Where(x => x.Id == id).Include(x => x.Owner).FirstOrDefaultAsync();
-                session.Owner.Sessions=null;
-                return session;
+                if (session != null)
+                {
+                    session.Owner.Sessions = null;
+                    return session;
+                }
+                else
+                {
+                    return session;
+                }
             }
         }
 
@@ -43,10 +49,11 @@ namespace Halisaha.DataAccess.Concrete
         {
             using (var halisahaDbContext = new HalisahaDbContext())
             {
-                List<Session> sessions =  await halisahaDbContext.Sessions.Where(x => x.Owner.Id == ownerId).Include(x=>x.Owner).ToListAsync();
+                List<Session> sessions = await halisahaDbContext.Sessions.Where(x => x.Owner.Id == ownerId).Include(x => x.Owner).ToListAsync();
 
-                foreach(Session session in sessions){
-                    session.Owner.Sessions=null;
+                foreach (Session session in sessions)
+                {
+                    session.Owner.Sessions = null;
                 }
                 return sessions;
             }

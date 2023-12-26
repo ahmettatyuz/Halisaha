@@ -9,8 +9,6 @@ using Halisaha.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Halisaha.API.Controllers
 {
     [Route("api/[controller]")]
@@ -37,7 +35,7 @@ namespace Halisaha.API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("owner")]
         public async Task<IActionResult> GetSessionsByOwnerId(int ownerId)
         {
             if (ownerId > 0)
@@ -85,8 +83,8 @@ namespace Halisaha.API.Controllers
             }
         }
 
-        [HttpGet("{sessionId}")]
-        public async Task<IActionResult> GetOwnerBySessionId(int sessionId)
+        [HttpGet("id")]
+        public async Task<IActionResult> GetSessionById(int sessionId)
         {
             var result = await _sessionService.GetSessionById(sessionId);
             if (result != null)
@@ -100,4 +98,3 @@ namespace Halisaha.API.Controllers
         }
     }
 }
-

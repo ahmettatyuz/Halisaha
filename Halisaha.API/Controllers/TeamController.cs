@@ -20,7 +20,8 @@ namespace Halisaha.API.Controllers
         public async Task<IActionResult> GetTeams()
         {
             List<Team> teams = await _teamService.GetTeams();
-            foreach(Team team in teams){
+            foreach (Team team in teams)
+            {
                 team.Players = await _teamService.GetPlayersInTeam(team.Id);
             }
             return Ok(teams);
@@ -43,14 +44,18 @@ namespace Halisaha.API.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteTeam(int id)
+        public async Task<IActionResult> DeleteTeam(int id, int playerId)
         {
             var result = await _teamService.GetTeam(id);
             if (result == null)
             {
                 return BadRequest("Takım bulunamadı.");
             }
-            return Ok(await _teamService.DeleteTeam(id));
+            else
+            {
+                await _teamService.DeleteTeam(id, playerId);
+            }
+            return Ok("Takım silindi");
         }
 
         [HttpPost]
@@ -73,6 +78,31 @@ namespace Halisaha.API.Controllers
                 return NotFound("Takım bulunamadı.");
             }
 
+        }
+
+        [HttpGet("playersTeam")]
+        public async Task<IActionResult> GetPlayersTeam(int playerId)
+        {
+            return Ok(await _teamService.GetPlayersTeam(playerId));
+        }
+
+        [HttpGet("teamIncludePlayer")]
+        public async Task<IActionResult> TeamsIncludedPlayer(int playerId){
+            return Ok(await _teamService.GetTeamIncludedPlayer(playerId));
+        }
+
+        [HttpDelete("player")]
+        public async Task<IActionResult> DeletePlayerFromTeam(int playerId, int teamId)
+        {
+            bool result = await _teamService.DeletePlayerFromTeam(playerId, teamId);
+            if (result)
+            {
+                return Ok("Oyuncu takımdan silindi");
+            }
+            else
+            {
+                return NotFound("Oyuncu silinemedi");
+            }
         }
 
     }

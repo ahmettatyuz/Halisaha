@@ -22,6 +22,8 @@ namespace Halisaha.Entities
 
         public DateTime CreateDate { get; set; } = DateTime.Now;
 
+		public int Deleted {get;set;}
+
     }
 }
 

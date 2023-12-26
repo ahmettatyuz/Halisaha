@@ -18,14 +18,24 @@ namespace Halisaha.Business.Concrete
             return await _teamRepository.CreateTeam(team);
         }
 
-        public async Task<Team> DeleteTeam(int id)
+        public async Task<bool> DeletePlayerFromTeam(int playerId, int teamId)
         {
-            return await _teamRepository.DeleteTeam(id);
+            return await _teamRepository.DeletePlayerFromTeam(playerId,teamId);
+        }
+
+        public async Task<Team> DeleteTeam(int id,int playerId)
+        {
+            return await _teamRepository.DeleteTeam(id,playerId);
         }
 
         public async Task<List<Player>> GetPlayersInTeam(int teamId)
         {
             return await _teamRepository.GetPlayersInTeam(teamId);
+        }
+
+        public async Task<List<Team>> GetPlayersTeam(int playerId)
+        {
+            return await _teamRepository.GetPlayersTeam(playerId);
         }
 
         public async Task<Team> GetTeam(int id)
@@ -41,6 +51,10 @@ namespace Halisaha.Business.Concrete
         public async Task<Team> UpdateTeam(Team team)
         {
             return await _teamRepository.UpdateTeam(team);
+        }
+
+        public async Task<List<Team>> GetTeamIncludedPlayer(int playerId){
+            return await _teamRepository.GetTeamIncludedPlayer(playerId);
         }
     }
 }

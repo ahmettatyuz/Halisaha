@@ -56,6 +56,8 @@ namespace Halisaha.Entities
         [Required]
         public string? Coordinate2 { get; set; }
 
+        public int? Transport {get;set;}
+
         public DateTime CreateDate { get; set; } = DateTime.Now;
 
         [SwaggerSchema(ReadOnly = true)]

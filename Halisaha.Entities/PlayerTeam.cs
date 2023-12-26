@@ -7,4 +7,6 @@ public class PlayerTeam
 
     public int TeamId { get; set; }
     public Team Team { get; set; }
+
+    public int Deleted {get;set;}
 }

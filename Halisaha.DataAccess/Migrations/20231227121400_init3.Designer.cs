@@ -4,6 +4,7 @@ using Halisaha.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Halisaha.DataAccess.Migrations
 {
     [DbContext(typeof(HalisahaDbContext))]
-    partial class HalisahaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231227121400_init3")]
+    partial class init3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,9 +198,6 @@ namespace Halisaha.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("TeamId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Deleted")
                         .HasColumnType("int");
 
                     b.HasKey("PlayerId", "TeamId");

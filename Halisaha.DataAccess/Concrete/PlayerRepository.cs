@@ -63,7 +63,7 @@ namespace Halisaha.DataAccess.Concrete
             using (var halisahaDbContext = new HalisahaDbContext())
             {
                 List<Team> teams = new List<Team>();
-                List<PlayerTeam> playerTeams = await halisahaDbContext.PlayerTeams.Where(x => x.PlayerId == playerId).Include(x => x.Team).ToListAsync();
+                List<PlayerTeam> playerTeams = await halisahaDbContext.PlayerTeams.Where(x => x.PlayerId == playerId && x.Deleted==0).Include(x => x.Team).ToListAsync();
                 foreach (PlayerTeam playerTeam in playerTeams)
                 {
                     teams.Add(playerTeam.Team);

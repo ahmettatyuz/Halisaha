@@ -29,6 +29,8 @@ namespace Halisaha.Entities
         public int DeplasmanTakimId {get;set;}
         public Team? DeplasmanTakim {get;set;}
 
+        public string? Address {get;set;}
+
         public DateTime CreateDate { get; set; } = DateTime.Now;
     }
 }

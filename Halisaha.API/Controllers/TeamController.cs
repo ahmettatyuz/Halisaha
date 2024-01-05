@@ -65,13 +65,14 @@ namespace Halisaha.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateTeam(Team team)
+        public async Task<IActionResult> UpdateTeam(int id,string name)
         {
-            var result = await _teamService.GetTeam(team.Id);
 
+            var result = await _teamService.GetTeam(id);
+            result.Name = name;
             if (result != null)
             {
-                return Ok(await _teamService.UpdateTeam(team));
+                return Ok(await _teamService.UpdateTeam(result));
             }
             else
             {

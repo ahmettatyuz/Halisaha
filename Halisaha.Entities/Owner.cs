@@ -48,6 +48,8 @@ namespace Halisaha.Entities
         [Required]
         public double Point { get; set; }
 
+        public int oySayisi {get;set;}
+
         [StringLength(100)]
         [Required]
         public string? Coordinate1 { get; set; }

@@ -118,6 +118,25 @@ namespace Halisaha.API.Controllers
             }
         }
 
+        [HttpPatch]
+        public async Task<IActionResult> VoteOwner(int ownerId, double yenipuan)
+        {
+            var result = await _ownerService.GetOwnerById(ownerId);
+            if (result != null)
+            {
+                double toplamPuan = result.Point * result.oySayisi;
+                toplamPuan += yenipuan;
+                result.oySayisi = result.oySayisi + 1;
+                result.Point = toplamPuan / result.oySayisi;
+                return Ok(await _ownerService.UpdateOwner(result));
+            }
+            else
+            {
+                return BadRequest("Halısaha bulunamadı");
+            }
+
+        }
+
 
         [HttpPut("password")]
         public async Task<IActionResult> UpdatePassword([FromBody] ChangePasswordModel model)

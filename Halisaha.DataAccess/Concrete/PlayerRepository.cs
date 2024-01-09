@@ -55,9 +55,10 @@ namespace Halisaha.DataAccess.Concrete
         {
             using (var halisahaDbContext = new HalisahaDbContext())
             {
-                
+
                 List<Player> players = await halisahaDbContext.Players.ToListAsync();
-                foreach(Player player in players){
+                foreach (Player player in players)
+                {
                     player.Teams = await GetTeamsForPlayer(player.Id);
                 }
                 return players;
@@ -69,12 +70,12 @@ namespace Halisaha.DataAccess.Concrete
             using (var halisahaDbContext = new HalisahaDbContext())
             {
                 List<Team> teams = new List<Team>();
-                List<PlayerTeam> playerTeams = await halisahaDbContext.PlayerTeams.Where(x => x.PlayerId == playerId && x.Deleted==0).Include(x => x.Team).ToListAsync();
+                List<PlayerTeam> playerTeams = await halisahaDbContext.PlayerTeams.Where(x => x.PlayerId == playerId && x.Deleted == 0).Include(x => x.Team).ToListAsync();
                 foreach (PlayerTeam playerTeam in playerTeams)
                 {
                     teams.Add(playerTeam.Team);
                 }
-                return teams.Where(x=>x.Deleted==0).ToList();
+                return teams.Where(x => x.Deleted == 0).ToList();
             }
 
         }

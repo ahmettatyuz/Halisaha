@@ -41,7 +41,7 @@ namespace Halisaha.DataAccess.Concrete
         {
             using (var halisahaDbContext = new HalisahaDbContext())
             {
-                List<Session> sessions = halisahaDbContext.Sessions.Where(x => x.OwnerId == id).ToList();
+                List<Session> sessions = halisahaDbContext.Sessions.Where(x => x.OwnerId == id).Include(x => x.Owner).ToList();
                 List<ReservedSession> reservedSessions = await halisahaDbContext.ReservedSessions.Where(x => sessions.Contains(x.Session)).Include(x => x.DeplasmanTakim).Include(x => x.EvSahibiTakim).ToListAsync();
                 foreach (ReservedSession reservedSession in reservedSessions)
                 {
@@ -53,6 +53,7 @@ namespace Halisaha.DataAccess.Concrete
                     {
                         reservedSession.EvSahibiTakim.ReservedSessions = null;
                     }
+                    reservedSession.Session.Owner.Sessions = null;
                 }
 
                 return reservedSessions;
@@ -68,7 +69,7 @@ namespace Halisaha.DataAccess.Concrete
                     .Select(playerTeam => playerTeam.Team)
                     .ToListAsync();
 
-                List<ReservedSession> reservedSessions = await halisahaDbContext.ReservedSessions.Where(x => teams.Contains(x.DeplasmanTakim) || teams.Contains(x.EvSahibiTakim)).Include(x=>x.Session).ThenInclude(x=>x.Owner).Include(x => x.DeplasmanTakim).Include(x => x.EvSahibiTakim).ToListAsync();
+                List<ReservedSession> reservedSessions = await halisahaDbContext.ReservedSessions.Where(x => teams.Contains(x.DeplasmanTakim) || teams.Contains(x.EvSahibiTakim)).Include(x => x.Session).ThenInclude(x => x.Owner).Include(x => x.DeplasmanTakim).Include(x => x.EvSahibiTakim).ToListAsync();
 
                 foreach (ReservedSession reservedSession in reservedSessions)
                 {
@@ -81,7 +82,7 @@ namespace Halisaha.DataAccess.Concrete
                         reservedSession.EvSahibiTakim.ReservedSessions = null;
                     }
 
-                    reservedSession.Session.Owner.Sessions=null;
+                    reservedSession.Session.Owner.Sessions = null;
                 }
 
                 return reservedSessions;
